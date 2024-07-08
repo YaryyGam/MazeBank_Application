@@ -15,7 +15,7 @@
 }
 
 .section_title{
-    -fx-font-size:1.4em;
+    -fx-font-size: 1.4em;
     -fx-font-family: "Calibri Light";
 }
 
@@ -41,7 +41,7 @@
 
 .account Text{
     -fx-fill: #FFFFFF;
-    -fx-font-family: "Calibri Light"
+    -fx-font-family: "Calibri Light";
     -fx-font-size: 1.5em;
 }
 
@@ -91,7 +91,7 @@
 
 .income_amount{
     -fx-text-fill: #00FF00;
-    -fx-font-family: "Calibri Light"
+    -fx-font-family: "Calibri Light";
     -fx-font-size: 1.5em;
 }
 
