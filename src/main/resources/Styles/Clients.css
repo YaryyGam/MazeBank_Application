@@ -16,5 +16,6 @@
 }
 
 .clients_container .list-cell{
-
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 10 0 10 0;
 }
