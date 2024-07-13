@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.jmc.mazebank.Controllers.Admin.ClientsController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="750.0" prefWidth="850.0" stylesheets="@../../Styles/Clients.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.mazebank.Controllers.Admin.ClientsController">
+   <children>
+      <Text layoutX="36.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clients:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <ListView layoutX="14.0" layoutY="31.0" prefHeight="660.0" prefWidth="800.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="45.0" />
+   </children>
 </AnchorPane>
