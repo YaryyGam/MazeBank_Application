@@ -1,6 +1,9 @@
 package com.jmc.mazebank.Controllers;
 
 import com.jmc.mazebank.Models.Model;
+import com.jmc.mazebank.Views.AccountType;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -12,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    public ChoiceBox acc_selector;
+    public ChoiceBox<AccountType> acc_selector;
     public Label payee_adress_lbl;
     public TextField payee_adress_fld;
     public TextField password_fld;
@@ -21,12 +24,20 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        acc_selector.setItems(FXCollections.observableArrayList(AccountType.CLIENT, AccountType.ADMIN));
+        acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
+        acc_selector.valueProperty().addListener(o->Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue()));
         loggin_btn.setOnAction(e-> onLogin());
+
     }
 
     private void onLogin(){
         Stage stage = (Stage) error_lbl.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(stage);
-        Model.getInstance().getViewFactory().showClientWindow();
+        if(Model.getInstance().getViewFactory().getLoginAccountType() == AccountType.CLIENT){
+            Model.getInstance().getViewFactory().showClientWindow();
+        }else{
+            Model.getInstance().getViewFactory().showAdminWindow();
+        }
     }
 }
