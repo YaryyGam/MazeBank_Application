@@ -13,10 +13,19 @@ public class DatabaseDriver {
         }
     }
 
-
-
     /* Client Section */
 
+    public  ResultSet getClientData(String pAddress, String password){
+        Statement statement;
+        ResultSet resultSet = null;
+        try{
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Clients WHERE PayeeAdress'" + pAddress+"' AND Password='"+password+"';");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
     /* Admin Section */
 
