@@ -29,20 +29,21 @@ public class DatabaseDriver {
         return resultSet;
     }
 
+    /* Admin Section */
 
-    /*public  ResultSet getClientData(String pAddress, String password){
-        Statement statement;
+    public ResultSet getAdminData(String username, String password){
         ResultSet resultSet = null;
         try{
-            statement = this.conn.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM Clients WHERE PayeeAddress'" + pAddress+"' AND Password='"+password+"';");
-        }catch (SQLException e){
+            String query = "SELECT * FROM Admins WHERE Username = ? AND Password =?";
+            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+        }catch(SQLException e){
             e.printStackTrace();
         }
         return resultSet;
-    }*/
-
-    /* Admin Section */
+    }
 
     /* Utility Method */
 }

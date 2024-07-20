@@ -2,6 +2,7 @@ package com.jmc.mazebank.Controllers;
 
 import com.jmc.mazebank.Models.Model;
 import com.jmc.mazebank.Views.AccountType;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +27,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         acc_selector.setItems(FXCollections.observableArrayList(AccountType.CLIENT, AccountType.ADMIN));
         acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
-        acc_selector.valueProperty().addListener(o->Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue()));
+        acc_selector.valueProperty().addListener(o->setAcc_selector());
         loggin_btn.setOnAction(e-> onLogin());
 
     }
@@ -46,7 +47,27 @@ public class LoginController implements Initializable {
                 error_lbl.setText("No Such Login Credentials");
             }
         }else{
-            Model.getInstance().getViewFactory().showAdminWindow();
+            // Evaluate Admin Login Credentials
+            Model.getInstance().evaluateAdminCredentials(payee_adress_fld.getText(), password_fld.getText());
+            if(Model.getInstance().getAdminLoginSuccessFlag()){
+                Model.getInstance().getViewFactory().showAdminWindow();
+                // Close the Login Stage
+                Model.getInstance().getViewFactory().closeStage(stage);
+            }else {
+                payee_adress_fld.setText("");
+                password_fld.setText("");
+                error_lbl.setText("No Such Login Credentials");
+            }
+        }
+    }
+
+    private void setAcc_selector(){
+        Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue());
+        // Change Payee Address label accordingly
+        if(acc_selector.getValue() == AccountType.ADMIN){
+            payee_adress_lbl.setText("Username:");
+        }else {
+            payee_adress_lbl.setText("Payee Address:");
         }
     }
 }

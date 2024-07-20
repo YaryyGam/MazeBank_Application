@@ -5,16 +5,17 @@ import com.jmc.mazebank.Views.ViewFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.concurrent.ExecutionException;
 
 public class Model {
     private static Model model;
     private final ViewFactory viewFactory;
     private final DatabaseDriver databaseDriver;
-    private AccountType loginAccountType = AccountType.CLIENT;
     // Client Data Section
     private Client client;
     private boolean clientLoginSuccessFlag;
     // Admin Data Section
+    private boolean adminLoginSuccessFlag;
 
     private Model(){
         this.viewFactory = new ViewFactory();
@@ -23,6 +24,7 @@ public class Model {
         this.clientLoginSuccessFlag = false;
         this.client = new Client("", "", "", null, null, null);
         // Admin Data Section
+        this.adminLoginSuccessFlag = false;
     }
 
     public static synchronized Model getInstance(){
@@ -37,10 +39,6 @@ public class Model {
     }
 
     public DatabaseDriver getDatabaseDriver(){return databaseDriver;}
-
-    public AccountType getLoginAccountType() {return loginAccountType;}
-
-    public void setLoginAccountType(AccountType loginAccountType) {this.loginAccountType = loginAccountType;}
 
     /*
     * Client Method Section
@@ -65,6 +63,25 @@ public class Model {
                     this.client.dateProperty().set(date);
                     this.clientLoginSuccessFlag = true;
                 }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    * Admin Method Section
+    * */
+
+    public boolean getAdminLoginSuccessFlag(){return this.adminLoginSuccessFlag;}
+
+    public void setAdminLoginSuccessFlag(boolean adminLoginSuccessFlag) {this.adminLoginSuccessFlag = adminLoginSuccessFlag;}
+
+    public void evaluateAdminCredentials(String username, String password){
+        ResultSet resultSet = databaseDriver.getAdminData(username, password);
+        try{
+            if(resultSet.isBeforeFirst()){
+                this.adminLoginSuccessFlag = true;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
