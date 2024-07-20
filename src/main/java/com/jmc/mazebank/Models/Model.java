@@ -4,6 +4,7 @@ import com.jmc.mazebank.Views.AccountType;
 import com.jmc.mazebank.Views.ViewFactory;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Model {
     private static Model model;
@@ -59,6 +60,10 @@ public class Model {
                     this.client.firstNameProperty().set(resultSet.getString("FirstName"));
                     this.client.lastNameProperty().set(resultSet.getString("LastName"));
                     this.client.pAddressProperty().set(resultSet.getString("PayeeAddress"));
+                    String[] dateParts = resultSet.getString("Date").split("-");
+                    LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+                    this.client.dateProperty().set(date);
+                    this.clientLoginSuccessFlag = true;
                 }
         }catch (Exception e){
             e.printStackTrace();
