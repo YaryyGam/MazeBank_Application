@@ -1,6 +1,7 @@
 package com.jmc.mazebank.Models;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DatabaseDriver {
     private Connection conn;
@@ -45,5 +46,55 @@ public class DatabaseDriver {
         return resultSet;
     }
 
+    public void createClient(String fName, String lName, String pAddress, String password, LocalDate date){
+        Statement statement;
+        try{
+            statement = this.conn.createStatement();
+            statement.executeUpdate("INSERT INTO " +
+                   "Clients (FirstName, LastName, PayeeAddress, Password, Date)"+
+                    " VALUES ('"+fName+"', '"+lName+"', '"+pAddress+"', '"+password+"', '"+date.toString()+"');");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createCheckingAccount(String owner, String accountNumber, double transactionLimit, double balance){
+        Statement statement;
+        try{
+            statement=this.conn.createStatement();
+            statement.executeUpdate("INSERT INTO " +
+                    "CheckingAccounts (Owner, AccountNumber, TransactionLimit, Balance)"+
+                    " VALUES ('"+owner+"','"+accountNumber+"',"+transactionLimit+","+balance+");");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createSavingsAccount(String owner, String accountNumber, double withdrawLimit, double balance){
+        Statement statement;
+        try{
+            statement=this.conn.createStatement();
+            statement.executeUpdate("INSERT INTO " +
+                    "SavingsAccounts (Owner, AccountNumber, WithdrawalLimit, Balance)"+
+                    "VALUES ('"+owner+"', '"+accountNumber+"', "+withdrawLimit+", "+balance+");");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     /* Utility Method */
+
+    public int getLastClientsID(){
+        Statement statement;
+        ResultSet resultSet;
+        int id = 0;
+        try{
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM sqlite_sequence WHERE name='Clients';");
+            id=resultSet.getInt("seq");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
