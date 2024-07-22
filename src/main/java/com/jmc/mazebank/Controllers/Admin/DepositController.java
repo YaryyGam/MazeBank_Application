@@ -6,6 +6,7 @@ import com.jmc.mazebank.Views.ClientCellFactory;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -20,13 +21,22 @@ public class DepositController implements Initializable {
     public ListView<Client> results_listview;
     public TextField amount_fld;
     public Button deposit_btn;
+    public Label message_lbl;
 
     private Client client;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        search_btn.setOnAction(e->onClientSearch());
-        deposit_btn.setOnAction(e->onDeposit());
+        search_btn.setOnAction(e->{
+            message_lbl.setText("");
+            onClientSearch();
+        });
+        deposit_btn.setOnAction(e-> {
+                onDeposit();
+                if(amount_fld.getText()!=null){
+                    message_lbl.setText("Deposit Successful!");
+                }
+        });
     }
 
     private void onClientSearch(){
