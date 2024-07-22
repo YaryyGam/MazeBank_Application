@@ -119,6 +119,23 @@ public class Model {
         }
     }
 
+    public ObservableList<Client> searchClient(String pAddress){
+        ObservableList<Client> searchResults = FXCollections.observableArrayList();
+        ResultSet resultSet = databaseDriver.searchClient(pAddress);
+        try {
+            ChekingAccount chekingAccount = getCheckingAccount(pAddress);
+            SavingsAccount savingsAccount = getSavingsAccount(pAddress);
+            String fName = resultSet.getString("FirstName");
+            String lName = resultSet.getString("LastName");
+            String[] dateParts = resultSet.getString("Date").split("-");
+            LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+            searchResults.add(new Client(fName, lName, pAddress, chekingAccount, savingsAccount, date));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return searchResults;
+    }
+
     /*
     * Utility Methods Section
      */
