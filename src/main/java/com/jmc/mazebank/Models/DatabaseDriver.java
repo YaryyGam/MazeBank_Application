@@ -30,6 +30,22 @@ public class DatabaseDriver {
         return resultSet;
     }
 
+    public ResultSet getTransactions(String pAddress, int limit) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            String sql = "SELECT * FROM Transactions WHERE Sender=? OR Receiver=? LIMIT ?";
+            statement = this.conn.prepareStatement(sql);
+            statement.setString(1, pAddress);
+            statement.setString(2, pAddress);
+            statement.setInt(3, limit);
+            resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     /* Admin Section */
 
     public ResultSet getAdminData(String username, String password){
