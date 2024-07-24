@@ -6,7 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.concurrent.ExecutionException;
 
 public class Model {
@@ -80,20 +82,32 @@ public class Model {
         }
     }
 
-    private void prepareTransactions(ObservableList<Transaction> transactions, int limit){
+    private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
         ResultSet resultSet = databaseDriver.getTransactions(this.client.pAddressProperty().get(), limit);
-        try{
-            while(resultSet.next()){
+        try {
+            while (resultSet.next()) {
                 String sender = resultSet.getString("Sender");
                 String receiver = resultSet.getString("Receiver");
                 double amount = resultSet.getDouble("Amount");
-                String[] dateParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+                String dateStr = resultSet.getString("Date");
                 String message = resultSet.getString("Message");
+
+                // Парсинг даты из временной метки
+                LocalDate date = null;
+                try {
+                    long timestamp = Long.parseLong(dateStr);
+                    Instant instant = Instant.ofEpochMilli(timestamp);
+                    date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("Error DATE: " + dateStr);
+                }
+
                 transactions.add(new Transaction(sender, receiver, amount, date, message));
             }
-        }catch (Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Request ERROR: " + e.getMessage());
         }
     }
 

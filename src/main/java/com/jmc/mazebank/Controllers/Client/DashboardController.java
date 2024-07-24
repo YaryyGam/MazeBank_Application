@@ -8,8 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -33,6 +33,7 @@ public class DashboardController implements Initializable {
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e->new TransactionCellFactory());
+        send_money_btn.setOnAction(e->onSendMoney());
     }
 
     private void bindData(){
@@ -48,5 +49,30 @@ public class DashboardController implements Initializable {
         if(Model.getInstance().getLatestTransactions().isEmpty()){
             Model.getInstance().setLatestTransactions();
         }
+    }
+
+    private void onSendMoney(){
+        String receiver = payee_fld.getText();
+        double amount = Double.parseDouble(amount_fld.getText());
+        String message = message_fld.getText();
+        String sender = Model.getInstance().getClient().pAddressProperty().get();
+        ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(receiver);
+        try{
+            if(resultSet.isBeforeFirst()){
+                Model.getInstance().getDatabaseDriver().updateBalance(receiver, amount, "ADD");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        // Subtract From Sender Savings Account
+        Model.getInstance().getDatabaseDriver().updateBalance(sender, amount, "SUB");
+        // UPDATE The Savings Account BALANCE in the client object
+        Model.getInstance().getClient().savingsAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(sender));
+        // Record NEW Transaction
+        Model.getInstance().getDatabaseDriver().newTransaction(sender, receiver, amount, message);
+        // Clear the FIELDS
+        payee_fld.setText("");
+        amount_fld.setText("");
+        message_fld.setText("");
     }
 }
