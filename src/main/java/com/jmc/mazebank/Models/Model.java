@@ -96,10 +96,8 @@ public class Model {
                 // Getting Date From TimeLine
                 LocalDate date = null;
                 try {
-                    long timestamp = Long.parseLong(dateStr);
-                    Instant instant = Instant.ofEpochMilli(timestamp);
-                    date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-                } catch (NumberFormatException e) {
+                    date = LocalDate.parse(dateStr); // Парсинг рядка у LocalDate
+                } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error DATE: " + dateStr);
                 }

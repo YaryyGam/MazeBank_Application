@@ -105,7 +105,7 @@ public class DatabaseDriver {
             insertStatement.setString(1, sender);
             insertStatement.setString(2, receiver);
             insertStatement.setDouble(3, amount);
-            insertStatement.setDate(4, java.sql.Date.valueOf(date));
+            insertStatement.setString(4, date.toString());
             insertStatement.setString(5, message);
             insertStatement.executeUpdate();
         }catch (SQLException e){
