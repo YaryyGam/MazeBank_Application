@@ -18,3 +18,18 @@
     -fx-background-color: #EEEEEE;
     -fx-pref-width: 800;
 }
+
+.transactions_container Button {
+     -fx-background-color: #132A13; /* Зелений фон */
+       -fx-text-fill: #FFFFFF; /* Білий текст */
+       -fx-border-color: #000000; /* Чорні краї */
+       -fx-border-width: 2px; /* Товщина країв */
+       -fx-pref-width: 30;
+       -fx-pref-height: 30;
+       -fx-font-size: 1.2em;
+       -fx-border-radius: 5px; /* Заокруглені краї (необов'язково) */
+       -fx-background-radius: 5px; /* Заокруглені кути фону (необов'язково) */
+   }
+.transactions_container FontAwesomeIconView{
+    -fx-fill: #FFFFFF;
+}

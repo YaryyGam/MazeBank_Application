@@ -84,6 +84,7 @@ public class Model {
 
     private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
         ResultSet resultSet = databaseDriver.getTransactions(this.client.pAddressProperty().get(), limit);
+        transactions.clear();
         try {
             while (resultSet.next()) {
                 String sender = resultSet.getString("Sender");
@@ -92,7 +93,7 @@ public class Model {
                 String dateStr = resultSet.getString("Date");
                 String message = resultSet.getString("Message");
 
-                // Парсинг даты из временной метки
+                // Getting Date From TimeLine
                 LocalDate date = null;
                 try {
                     long timestamp = Long.parseLong(dateStr);

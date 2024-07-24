@@ -1,11 +1,9 @@
 package com.jmc.mazebank.Views;
 
 import com.jmc.mazebank.Controllers.Client.TransactionCellController;
-import com.jmc.mazebank.Controllers.Client.TransactionsController;
 import com.jmc.mazebank.Models.Transaction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 
 public class TransactionCellFactory extends ListCell<Transaction> {
 
