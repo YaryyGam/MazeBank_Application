@@ -35,6 +35,7 @@ public class DashboardController implements Initializable {
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e->new TransactionCellFactory());
         send_money_btn.setOnAction(e->onSendMoney());
+        accountSummary();
     }
 
     private void bindData(){
@@ -91,5 +92,7 @@ public class DashboardController implements Initializable {
                 income = income + transaction.amountProperty().get();
             }
         }
+        income_lbl.setText("+ $"+ income);
+        expense_lbl.setText("- $" + expenses);
     }
 }
