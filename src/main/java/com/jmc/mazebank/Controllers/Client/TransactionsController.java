@@ -20,25 +20,17 @@ public class TransactionsController implements Initializable {
     public Label sender_lbl;
     public Label receiver_lbl;
     public Label amount_lbl;
-    public Button refresh_btn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initAllTransactionsList();
         transactions_listview.setItems(Model.getInstance().getAllTransactions());
         transactions_listview.setCellFactory(e->new TransactionCellFactory());
-        refresh_btn.setOnAction(e->onUpdate());
     }
 
     private void initAllTransactionsList(){
         if(Model.getInstance().getAllTransactions().isEmpty()) {
             Model.getInstance().setAllTransactions();
         }
-    }
-
-    private void onUpdate(){
-        Model.getInstance().setAllTransactions();
-        transactions_listview.setItems(Model.getInstance().getAllTransactions());
-        transactions_listview.setCellFactory(e->new TransactionCellFactory());
     }
 }

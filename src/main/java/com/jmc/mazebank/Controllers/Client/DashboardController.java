@@ -34,7 +34,10 @@ public class DashboardController implements Initializable {
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e->new TransactionCellFactory());
-        send_money_btn.setOnAction(e->onSendMoney());
+        send_money_btn.setOnAction(e->{
+            onSendMoney();
+            accountSummary();
+        });
         accountSummary();
     }
 
@@ -82,9 +85,9 @@ public class DashboardController implements Initializable {
     private void accountSummary(){
         double income = 0;
         double expenses = 0;
-        if(Model.getInstance().getAllTransactions().isEmpty()){
+        //if(Model.getInstance().getAllTransactions().isEmpty()){
             Model.getInstance().setAllTransactions();
-        }
+        //}
         for(Transaction transaction: Model.getInstance().getAllTransactions()){
             if (transaction.senderProperty().get().equals(Model.getInstance().getClient().pAddressProperty().get())){
                 expenses = expenses + transaction.amountProperty().get();

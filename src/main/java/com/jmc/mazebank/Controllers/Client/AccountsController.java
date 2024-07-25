@@ -1,5 +1,6 @@
 package com.jmc.mazebank.Controllers.Client;
 
+import com.jmc.mazebank.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +25,17 @@ public class AccountsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bindData();
+    }
 
+    public void bindData(){
+        ch_acc_num.textProperty().bind(Model.getInstance().getClient().checkingAccountProperty().get().accountNumberProperty());
+        sv_acc_num.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().accountNumberProperty());
+        ch_acc_bal.textProperty().bind(Model.getInstance().getClient().checkingAccountProperty().get().balanceProperty().asString());
+        sv_acc_bal.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().balanceProperty().asString());
+        ch_date.textProperty().bind(Model.getInstance().getClient().dateProperty().asString());
+        sv_acc_date.textProperty().bind(Model.getInstance().getClient().dateProperty().asString());
+        transaction_limit.textProperty().bind(Model.getInstance().getClient().transactionLimitProperty().asString());
+        withdraw_limit.textProperty().bind(Model.getInstance().getClient().withdrawalLimitProperty().asString());
     }
 }

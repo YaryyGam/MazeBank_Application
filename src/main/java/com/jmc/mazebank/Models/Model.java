@@ -1,15 +1,10 @@
 package com.jmc.mazebank.Models;
 
-import com.jmc.mazebank.Views.AccountType;
 import com.jmc.mazebank.Views.ViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.concurrent.ExecutionException;
 
 public class Model {
     private static Model model;

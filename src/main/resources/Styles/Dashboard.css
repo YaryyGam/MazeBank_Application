@@ -101,6 +101,21 @@
     -fx-font-size: 1.5em;
 }
 
+.summary_view Button {
+     -fx-background-color: #132A13; /* Зелений фон */
+       -fx-text-fill: #FFFFFF; /* Білий текст */
+       -fx-border-color: #000000; /* Чорні краї */
+       -fx-border-width: 1px; /* Товщина країв */
+       -fx-pref-width: 240;
+       -fx-pref-height: 20;
+       -fx-font-size: 1.2em;
+       -fx-border-radius: 100px; /* Заокруглені краї (необов'язково) */
+       -fx-background-radius: 100px; /* Заокруглені кути фону (необов'язково) */
+   }
+.summary_view FontAwesomeIconView{
+    -fx-fill: #FFFFFF;
+}
+
 /* Transactions View */
 
 .transaction_listview{
@@ -149,3 +164,4 @@
 .new_trans_container Button:hover{
     -fx-cursor: hand;
 }
+
