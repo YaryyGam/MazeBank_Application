@@ -1,6 +1,7 @@
 package com.jmc.mazebank.Controllers.Client;
 
 import com.jmc.mazebank.Models.Model;
+import com.jmc.mazebank.Models.Transaction;
 import com.jmc.mazebank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
@@ -74,5 +75,21 @@ public class DashboardController implements Initializable {
         payee_fld.setText("");
         amount_fld.setText("");
         message_fld.setText("");
+    }
+
+    // Method calculates all expenses and income
+    private void accountSummary(){
+        double income = 0;
+        double expenses = 0;
+        if(Model.getInstance().getAllTransactions().isEmpty()){
+            Model.getInstance().setAllTransactions();
+        }
+        for(Transaction transaction: Model.getInstance().getAllTransactions()){
+            if (transaction.senderProperty().get().equals(Model.getInstance().getClient().pAddressProperty().get())){
+                expenses = expenses + transaction.amountProperty().get();
+            }else{
+                income = income + transaction.amountProperty().get();
+            }
+        }
     }
 }
