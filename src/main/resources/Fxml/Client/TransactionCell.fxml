@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-
-<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="cell_container"
-            stylesheets="@../../Styles/TransactionCell.css" xmlns="http://javafx.com/javafx/22"
-            xmlns:fx="http://javafx.com/fxml/1"
-            >
-   <VBox prefHeight="50.0" prefWidth="50.0" styleClass="trans_icon_container" AnchorPane.bottomAnchor="5.0"
-         AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
-      <FontAwesomeIconView fx:id="in_icon" glyphName="LONG_ARROW_RIGHT" size="17"/>
-      <FontAwesomeIconView fx:id="out_icon" glyphName="LONG_ARROW_LEFT" size="17"/>
+<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="cell_container" stylesheets="@../../Styles/TransactionCell.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox prefHeight="50.0" prefWidth="50.0" styleClass="trans_icon_container" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
+      <FontAwesomeIconView fx:id="in_icon" glyphName="LONG_ARROW_RIGHT" size="17" />
+      <FontAwesomeIconView fx:id="out_icon" glyphName="LONG_ARROW_LEFT" size="17" />
    </VBox>
-   <Label fx:id="trans_date_lbl" layoutX="106.0" layoutY="22.0" styleClass="trans_date_lbl" text="2024-14-07"
-          AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="22.0"/>
-   <Label fx:id="sender_lbl" layoutX="209.0" layoutY="22.0" styleClass="trans_pAdress_lbl" text="Pablo"
-          AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="200.0"/>
-   <Line endY="20.0" layoutX="275.0" layoutY="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="300.0"
-         AnchorPane.topAnchor="20.0"/>
-   <Label fx:id="receiver_lbl" layoutX="337.0" layoutY="22.0" styleClass="trans_pAdress_lbl" text="Benjamin"
-          AnchorPane.leftAnchor="350.0"/>
-   <Label fx:id="amount_lbl" layoutX="508.0" layoutY="22.0" styleClass="trans_amount_lbl" text="2 000.00"
-          AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0">
+   <Label fx:id="trans_date_lbl" layoutX="106.0" layoutY="22.0" styleClass="trans_date_lbl" text="2024-14-07" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="22.0" />
+   <Label fx:id="sender_lbl" layoutX="209.0" layoutY="22.0" styleClass="trans_pAdress_lbl" text="Pablo" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="200.0" />
+   <Line endY="20.0" layoutX="275.0" layoutY="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="20.0" />
+   <Label fx:id="receiver_lbl" layoutX="337.0" layoutY="22.0" styleClass="trans_pAdress_lbl" text="Benjamin" AnchorPane.leftAnchor="350.0" />
+   <Label fx:id="amount_lbl" layoutX="508.0" layoutY="22.0" styleClass="trans_amount_lbl" text="2 000.00" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="17.0">
       <graphic>
-         <FontAwesomeIconView glyphName="DOLLAR" size="12"/>
+         <FontAwesomeIconView glyphName="DOLLAR" size="12" />
       </graphic>
    </Label>
+   <Button fx:id="message_btn" layoutX="422.0" layoutY="19.0" mnemonicParsing="false" styleClass="trans_icon_container" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="17.0">
+      <graphic>
+         <FontAwesomeIconView glyphName="BELL" size="20" />
+      </graphic>
+   </Button>
 </AnchorPane>
