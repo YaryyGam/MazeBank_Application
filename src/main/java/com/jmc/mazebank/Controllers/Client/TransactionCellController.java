@@ -21,7 +21,7 @@ public class TransactionCellController implements Initializable {
     public Label amount_lbl;
     public Button message_btn;
 
-    private final Transaction transaction;
+    private Transaction transaction;
 
     public TransactionCellController(Transaction transaction){
         this.transaction = transaction;

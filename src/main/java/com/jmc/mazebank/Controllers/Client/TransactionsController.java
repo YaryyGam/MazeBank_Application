@@ -3,14 +3,11 @@ package com.jmc.mazebank.Controllers.Client;
 import com.jmc.mazebank.Models.Model;
 import com.jmc.mazebank.Models.Transaction;
 import com.jmc.mazebank.Views.TransactionCellFactory;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class TransactionsController implements Initializable {

@@ -53,6 +53,8 @@ public class DashboardController implements Initializable {
     private void initLatestTransactionsList(){
         if(Model.getInstance().getLatestTransactions().isEmpty()){
             Model.getInstance().setLatestTransactions();
+        }else {
+            Model.getInstance().setLatestTransactions();
         }
     }
 
@@ -75,6 +77,8 @@ public class DashboardController implements Initializable {
         Model.getInstance().getClient().savingsAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(sender));
         // Record NEW Transaction
         Model.getInstance().getDatabaseDriver().newTransaction(sender, receiver, amount, message);
+        // Add the new transaction to the list
+        Model.getInstance().addTransaction(new Transaction(sender, receiver, amount, LocalDate.now(), message));
         // Clear the FIELDS
         payee_fld.setText("");
         amount_fld.setText("");
@@ -85,9 +89,11 @@ public class DashboardController implements Initializable {
     private void accountSummary(){
         double income = 0;
         double expenses = 0;
-        //if(Model.getInstance().getAllTransactions().isEmpty()){
+        if(Model.getInstance().getAllTransactions().isEmpty()){
             Model.getInstance().setAllTransactions();
-        //}
+        }else {
+            Model.getInstance().updateTransactions();
+        }
         for(Transaction transaction: Model.getInstance().getAllTransactions()){
             if (transaction.senderProperty().get().equals(Model.getInstance().getClient().pAddressProperty().get())){
                 expenses = expenses + transaction.amountProperty().get();

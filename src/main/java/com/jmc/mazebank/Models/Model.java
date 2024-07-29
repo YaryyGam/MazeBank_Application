@@ -79,7 +79,6 @@ public class Model {
 
     private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
         ResultSet resultSet = databaseDriver.getTransactions(this.client.pAddressProperty().get(), limit);
-        transactions.clear();
         try {
             while (resultSet.next()) {
                 String sender = resultSet.getString("Sender");
@@ -102,6 +101,21 @@ public class Model {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Request ERROR: " + e.getMessage());
+        }
+    }
+
+    public void updateTransactions(){
+        allTransactions.clear();
+        prepareTransactions(allTransactions, -1);
+    }
+
+    public void addTransaction(Transaction transaction) {
+        // Додаємо нову транзакцію
+        latestTransactions.add(0, transaction);
+
+        // Перевіряємо розмір списку
+        if (latestTransactions.size() > 4) {
+            latestTransactions.remove(latestTransactions.size() - 1); // Видаляємо найстарішу транзакцію
         }
     }
 
