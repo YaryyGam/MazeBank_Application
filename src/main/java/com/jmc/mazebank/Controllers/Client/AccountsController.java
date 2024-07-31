@@ -12,11 +12,9 @@ import java.util.ResourceBundle;
 
 public class AccountsController implements Initializable {
     public Label ch_acc_num;
-    public Label transaction_limit;
     public Label ch_date;
     public Label ch_acc_bal;
     public Label sv_acc_num;
-    public Label withdraw_limit;
     public Label sv_acc_date;
     public Label sv_acc_bal;
     public TextField amount_to_sv;
@@ -46,8 +44,6 @@ public class AccountsController implements Initializable {
         sv_acc_bal.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().balanceProperty().asString());
         ch_date.textProperty().bind(Model.getInstance().getClient().dateProperty().asString());
         sv_acc_date.textProperty().bind(Model.getInstance().getClient().dateProperty().asString());
-        transaction_limit.textProperty().bind(Model.getInstance().getClient().transactionLimitProperty().asString());
-        withdraw_limit.textProperty().bind(Model.getInstance().getClient().withdrawalLimitProperty().asString());
     }
 
     public void updateUI() {Model.getInstance().updateBalance();}

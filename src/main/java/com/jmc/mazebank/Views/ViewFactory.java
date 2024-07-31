@@ -22,6 +22,7 @@ public class ViewFactory {
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
     private AnchorPane accountsView;
+    private AnchorPane profileView;
 
     // Admin Views
     private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
@@ -82,6 +83,17 @@ public class ViewFactory {
         return accountsView;
     }
 
+    public AnchorPane getProfileView(){
+        if(profileView == null){
+            try{
+                profileView = new FXMLLoader(getClass().getResource("/Fxml/Client/Profile.fxml")).load();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return profileView;
+    }
+
     public void showClientWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));
         ClientController clientController = new ClientController();
@@ -138,6 +150,10 @@ public class ViewFactory {
     public void showLoginWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
         createStage(loader);
+    }
+
+    public void showReportWindow(){
+
     }
 
     public void showMessageWindow(String pAddress, String messageText){
