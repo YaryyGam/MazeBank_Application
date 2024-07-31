@@ -187,6 +187,19 @@ public class DatabaseDriver {
 
     }
 
+    public void sendReport(String pAddress, String message){
+        PreparedStatement preparedStatement = null;
+        try {
+            String sql = "INSERT INTO Reports (PayeeAddress, ReportText) VALUES (?, ?)";
+            preparedStatement = this.conn.prepareStatement(sql);
+            preparedStatement.setString(1, pAddress);
+            preparedStatement.setString(2, message);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     /* Admin Section */
 
     public ResultSet getAdminData(String username, String password){

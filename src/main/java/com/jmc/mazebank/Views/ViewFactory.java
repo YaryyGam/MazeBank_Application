@@ -2,16 +2,20 @@ package com.jmc.mazebank.Views;
 
 import com.jmc.mazebank.Controllers.Admin.AdminController;
 import com.jmc.mazebank.Controllers.Client.ClientController;
+import com.jmc.mazebank.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -153,7 +157,23 @@ public class ViewFactory {
     }
 
     public void showReportWindow(){
-
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        TextArea textArea = new TextArea();
+        Button button = new Button("Send");
+        vBox.getChildren().addAll(textArea,button);
+        Scene scene = new Scene(vBox, 300, 100);
+        Stage stage = new Stage();
+        button.setOnAction(e->{
+            Model.getInstance().getDatabaseDriver().sendReport(Model.getInstance().getClient().pAddressProperty().get(), textArea.getText());
+            closeStage(stage);
+        });
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/icon.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Report");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void showMessageWindow(String pAddress, String messageText){
