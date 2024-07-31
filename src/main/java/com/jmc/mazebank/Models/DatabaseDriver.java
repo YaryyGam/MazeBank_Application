@@ -2,10 +2,6 @@ package com.jmc.mazebank.Models;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class DatabaseDriver {
     private Connection conn;
@@ -67,6 +63,22 @@ public class DatabaseDriver {
         return balance;
     }
 
+    public double getCheckingAccountBalance(String pAddress){
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        double balance = 0;
+        try {
+            String sql ="SELECT * FROM CheckingAccounts WHERE Owner=?";
+            statement = this.conn.prepareStatement(sql);
+            statement.setString(1, pAddress);
+            resultSet = statement.executeQuery();
+            balance = resultSet.getDouble("Balance");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return balance;
+    }
+
     // Method to either add or subtract from balance given operation
     public void updateBalance(String pAddress, double amount, String operation){
         PreparedStatement selectStatement = null;
@@ -115,6 +127,64 @@ public class DatabaseDriver {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public void moveFundsOnAccount(String pAddress, double amount, String operation){
+        PreparedStatement selectStatementChecking = null;
+        PreparedStatement selectStatementSaving = null;
+        PreparedStatement updateCheckingStatement = null;
+        PreparedStatement updateSavingStatement = null;
+        ResultSet resultSetChecking;
+        ResultSet resultSetSavings;
+
+        try {
+            String sqlSelectChecking = "SELECT * FROM CheckingAccounts WHERE Owner=?";
+            String sqlSelectSavings = "SELECT * FROM SavingsAccounts WHERE Owner=?";
+            String sqlUpdateChecking = "UPDATE CheckingAccounts SET Balance=? WHERE Owner=?";
+            String sqlUpdateSavings = "UPDATE SavingsAccounts SET Balance=? WHERE Owner=?";
+
+            double newBalance;
+            double updatedBalance;
+
+            selectStatementChecking = this.conn.prepareStatement(sqlSelectChecking);
+            selectStatementSaving = this.conn.prepareStatement(sqlSelectSavings);
+            selectStatementChecking.setString(1, pAddress);
+            selectStatementSaving.setString(1, pAddress);
+
+            resultSetChecking = selectStatementChecking.executeQuery();
+            resultSetSavings = selectStatementSaving.executeQuery();
+
+            if(operation.equalsIgnoreCase("savings")){
+                if(resultSetSavings.getDouble("Balance")>=amount){
+                    newBalance = resultSetSavings.getDouble("Balance") - amount;
+                    updateSavingStatement = this.conn.prepareStatement(sqlUpdateSavings);
+                    updateSavingStatement.setDouble(1, newBalance);
+                    updateSavingStatement.setString(2, pAddress);
+                    updateSavingStatement.executeUpdate();
+                    updatedBalance = resultSetChecking.getDouble("Balance") + amount;
+                    updateCheckingStatement = this.conn.prepareStatement(sqlUpdateChecking);
+                    updateCheckingStatement.setDouble(1, updatedBalance);
+                    updateCheckingStatement.setString(2, pAddress);
+                    updateCheckingStatement.executeUpdate();
+                }
+            }else{
+                if(resultSetChecking.getDouble("Balance")>=amount){
+                    newBalance = resultSetChecking.getDouble("Balance") - amount;
+                    updateCheckingStatement = this.conn.prepareStatement(sqlUpdateChecking);
+                    updateCheckingStatement.setDouble(1, newBalance);
+                    updateCheckingStatement.setString(2, pAddress);
+                    updateCheckingStatement.executeUpdate();
+                    updatedBalance = resultSetSavings.getDouble("Balance") + amount;
+                    updateSavingStatement = this.conn.prepareStatement(sqlUpdateSavings);
+                    updateSavingStatement.setDouble(1, updatedBalance);
+                    updateSavingStatement.setString(2, pAddress);
+                    updateSavingStatement.executeUpdate();
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     /* Admin Section */

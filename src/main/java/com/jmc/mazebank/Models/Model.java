@@ -135,6 +135,11 @@ public class Model {
         return allTransactions;
     }
 
+    public void updateBalance(){
+        Model.getInstance().getClient().savingsAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(Model.getInstance().getClient().pAddressProperty().get()));
+        Model.getInstance().getClient().checkingAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getCheckingAccountBalance(Model.getInstance().getClient().pAddressProperty().get()));
+    }
+
     /*
     * Admin Method Section
     * */
