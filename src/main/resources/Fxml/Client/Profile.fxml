@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="750.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jmc.mazebank.Controllers.Client.ProfileController">
-
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="profile_container" stylesheets="@../../Styles/Profile.css"
+            xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jmc.mazebank.Controllers.Client.ProfileController">
+   <VBox layoutX="665.0" layoutY="69.0" prefHeight="240.0" prefWidth="250.0" styleClass="personal_balance_container"
+         AnchorPane.bottomAnchor="115.0" AnchorPane.rightAnchor="14.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Savings Account Balance:"/>
+      <Label fx:id="sv_balance_lbl" text="sBalance"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Checking Account Balance:"/>
+      <Label fx:id="ch_balance_lbl" text="cBalance"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Amount of Transactions:"/>
+      <Label fx:id="total_transactions_lbl" text="Transactions"/>
+   </VBox>
+   <Label fx:id="date_lbl" layoutX="784.0" layoutY="27.0" text="Date" AnchorPane.rightAnchor="14.0"
+          AnchorPane.topAnchor="14.0"/>
+   <VBox layoutX="33.0" layoutY="86.0" prefHeight="560.0" prefWidth="450.0"
+         styleClass="personal_information_container" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="14.0"
+         AnchorPane.topAnchor="70.0">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name:"/>
+      <Label fx:id="fName_lbl" text="Name"/>
+      <Line endX="351.0" startX="-100.0"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name:"/>
+      <Label fx:id="lName_lbl" text="Sirname"/>
+      <Line endX="351.0" startX="-100.0"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PayeeAddress:"/>
+      <Label fx:id="pAddress_lbl" text="pAddress"/>
+      <Line endX="351.0" startX="-100.0"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Savings Account Status:"/>
+      <Label fx:id="sv_acc_status_lbl" text="Status"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Checking Account Status:"/>
+      <Label fx:id="ch_acc_status_lbl" text="Status"/>
+      <Line endX="351.0" startX="-100.0"/>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Balance:"/>
+      <Label fx:id="total_balance_lbl" text="Balance"/>
+   </VBox>
+   <Text layoutX="28.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Information:"
+         AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0"/>
+   <VBox layoutX="586.0" layoutY="70.0" prefHeight="240.0" prefWidth="250.0" styleClass="personal_photo_container"
+         AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="70.0">
+      <FontAwesomeIconView glyphName="USER" size="240"/>
+   </VBox>
 </AnchorPane>

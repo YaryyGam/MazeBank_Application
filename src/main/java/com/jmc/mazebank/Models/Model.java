@@ -1,6 +1,7 @@
 package com.jmc.mazebank.Models;
 
 import com.jmc.mazebank.Views.ViewFactory;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.*;
@@ -15,6 +16,7 @@ public class Model {
     private boolean clientLoginSuccessFlag;
     private final ObservableList<Transaction> latestTransactions;
     private final ObservableList<Transaction> allTransactions;
+    private SimpleStringProperty totalTransactions;
     // Admin Data Section
     private boolean adminLoginSuccessFlag;
     private final ObservableList<Client> clients;

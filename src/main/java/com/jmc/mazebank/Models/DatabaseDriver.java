@@ -200,6 +200,28 @@ public class DatabaseDriver {
         }
     }
 
+    public int getAmountOfTransactions(String pAddress) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int amountOfTransactions = 0;
+
+        try {
+            String sql = "SELECT COUNT(*) AS transaction_count FROM Transactions WHERE Sender=? OR Receiver=?";
+            statement = this.conn.prepareStatement(sql);
+            statement.setString(1, pAddress);
+            statement.setString(2, pAddress);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                amountOfTransactions = resultSet.getInt("transaction_count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return amountOfTransactions;
+    }
+
     /* Admin Section */
 
     public ResultSet getAdminData(String username, String password){

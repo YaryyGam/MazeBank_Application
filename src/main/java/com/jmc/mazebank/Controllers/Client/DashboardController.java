@@ -4,6 +4,7 @@ import com.jmc.mazebank.Models.Model;
 import com.jmc.mazebank.Models.Transaction;
 import com.jmc.mazebank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -28,8 +29,11 @@ public class DashboardController implements Initializable {
     public TextArea message_fld;
     public Button send_money_btn;
 
+    private SimpleStringProperty totalTransactions;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        totalTransactions = new SimpleStringProperty();
         bindData();
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
@@ -37,6 +41,7 @@ public class DashboardController implements Initializable {
         send_money_btn.setOnAction(e->{
             onSendMoney();
             accountSummary();
+            updateTransactions();
         });
         accountSummary();
     }
@@ -103,5 +108,10 @@ public class DashboardController implements Initializable {
         }
         income_lbl.setText("+ $"+ income);
         expense_lbl.setText("- $" + expenses);
+    }
+
+    private void updateTransactions(){
+        int count = Model.getInstance().getDatabaseDriver().getAmountOfTransactions(Model.getInstance().getClient().pAddressProperty().get());
+        totalTransactions.set(Integer.toString(count));
     }
 }

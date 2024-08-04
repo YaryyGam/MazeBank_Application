@@ -1,0 +1,74 @@
+.profile_container{
+    -fx-background-color: #EEEEEE;
+}
+
+.profile_container Text{
+    -fx-font-weight: bold;
+        -fx-fill: #132A13;
+        -fx-font-size: 1.8em;
+}
+
+.profile_container Label{
+    -fx-font-weight: bold;
+            -fx-fill: #132A13;
+            -fx-font-size: 1.8em;
+}
+
+/* Personal info container */
+
+.personal_information_container{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0,0,4);
+}
+
+.personal_information_container{
+    -fx-padding: 10 10 0 10;
+    -fx-spacing: 15;
+}
+
+.personal_information_container Text{
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 2.0em;
+}
+
+.personal_information_container Label{
+        -fx-font-family: "Calibri Light";
+        -fx-font-size: 1.7em;
+}
+
+.personal_information_container Line{
+    -fx-stroke: #AAAAAA;
+}
+
+/* Balance info container */
+
+.personal_balance_container{
+        -fx-background-color: #FFFFFF;
+        -fx-background-radius: 10;
+        -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0,0,4);
+}
+
+.personal_balance_container{
+    -fx-padding: 10 10 0 10;
+    -fx-spacing: 15;
+}
+
+.personal_balance_container Text{
+    -fx-font-family: "Calibri Light";
+        -fx-font-size: 1.5em;
+}
+
+.personal_balance_container Label{
+    -fx-font-family: "Calibri Light";
+            -fx-font-size: 1.4em;
+}
+
+/* Photo */
+
+.personal_photo_container{
+    -fx-background-color: #FFFFFF;
+        -fx-background-radius: 10;
+        -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0,0,4);
+        -fx-alignment: center;
+}
