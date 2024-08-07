@@ -4,7 +4,6 @@ import com.jmc.mazebank.Models.Model;
 import com.jmc.mazebank.Models.Transaction;
 import com.jmc.mazebank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
