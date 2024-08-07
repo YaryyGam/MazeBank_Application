@@ -21,14 +21,10 @@ public class ProfileController implements Initializable {
     public Label ch_acc_status_lbl;
     public Label total_balance_lbl;
 
-    private SimpleStringProperty totalTransactions;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        totalTransactions = new SimpleStringProperty();
         bindData();
         checkAccount();
-        updateTransactions();
         setupListeners();
     }
 
@@ -37,6 +33,7 @@ public class ProfileController implements Initializable {
         fName_lbl.setText(Model.getInstance().getClient().firstNameProperty().get());
         lName_lbl.setText(Model.getInstance().getClient().lastNameProperty().get());
         pAddress_lbl.setText(Model.getInstance().getClient().pAddressProperty().get());
+        total_transactions_lbl.textProperty().bind(Model.getInstance().getTotalTransactions());
     }
 
     private void checkAccount(){
@@ -45,12 +42,7 @@ public class ProfileController implements Initializable {
             sv_acc_status_lbl.setText("Online");
             sv_balance_lbl.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().balanceProperty().asString());
             updateTotalBalance();
-            total_transactions_lbl.textProperty().bind(totalTransactions);
-    }
-
-    private void updateTransactions(){
-        int count = Model.getInstance().getDatabaseDriver().getAmountOfTransactions(Model.getInstance().getClient().pAddressProperty().get());
-        totalTransactions.set(Integer.toString(count));
+            updateTotalTransactions();
     }
 
     private void updateTotalBalance() {
@@ -59,6 +51,12 @@ public class ProfileController implements Initializable {
         double totalBalance = checkingBalance + savingsBalance;
         total_balance_lbl.setText(String.format("%.2f", totalBalance));
     }
+
+    public void updateTotalTransactions(){
+        Model.getInstance().updateAmountOfTransactions(Model.getInstance().getClient().pAddressProperty().get());
+    }
+
+    public void updateTransactions(){updateTotalTransactions();}
 
     private void setupListeners() {
         // Слухач для оновлення загального балансу при зміні балансу рахунків

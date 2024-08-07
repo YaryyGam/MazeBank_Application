@@ -29,11 +29,8 @@ public class DashboardController implements Initializable {
     public TextArea message_fld;
     public Button send_money_btn;
 
-    private SimpleStringProperty totalTransactions;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        totalTransactions = new SimpleStringProperty();
         bindData();
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
@@ -75,6 +72,8 @@ public class DashboardController implements Initializable {
             }
         }catch (Exception e){
             e.printStackTrace();
+            showAlert("Error processing transaction. Please try again");
+            return;
         }
         // Subtract From Sender Savings Account
         Model.getInstance().getDatabaseDriver().updateBalance(sender, amount, "SUB");
@@ -85,6 +84,10 @@ public class DashboardController implements Initializable {
         // Add the new transaction to the list
         Model.getInstance().addTransaction(new Transaction(sender, receiver, amount, LocalDate.now(), message));
         // Clear the FIELDS
+        clearFields();
+    }
+
+    private void clearFields() {
         payee_fld.setText("");
         amount_fld.setText("");
         message_fld.setText("");
@@ -111,7 +114,12 @@ public class DashboardController implements Initializable {
     }
 
     private void updateTransactions(){
-        int count = Model.getInstance().getDatabaseDriver().getAmountOfTransactions(Model.getInstance().getClient().pAddressProperty().get());
-        totalTransactions.set(Integer.toString(count));
+        Model.getInstance().updateAmountOfTransactions(Model.getInstance().getClient().pAddressProperty().get());
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.show();
     }
 }

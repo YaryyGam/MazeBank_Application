@@ -200,24 +200,72 @@ public class DatabaseDriver {
         }
     }
 
-    public int getAmountOfTransactions(String pAddress) {
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        int amountOfTransactions = 0;
+    public void AmountOfTransactions(String pAddress) {
+        PreparedStatement selectStatement = null;
+        PreparedStatement insertStatement = null;
+        PreparedStatement updateStatement = null;
+        ResultSet resultSet;
 
         try {
-            String sql = "SELECT COUNT(*) AS transaction_count FROM Transactions WHERE Sender=? OR Receiver=?";
-            statement = this.conn.prepareStatement(sql);
-            statement.setString(1, pAddress);
-            statement.setString(2, pAddress);
-            resultSet = statement.executeQuery();
+            // Запити для вибірки, вставки та оновлення
+            String selectTransactionCountSql = "SELECT COUNT(*) AS transaction_count FROM Transactions WHERE Sender=? OR Receiver=?";
+            String selectAddressSql = "SELECT COUNT(*) AS address_count FROM TransactionsAmount WHERE PayeeAddress=?";
+            String insertSql = "INSERT INTO TransactionsAmount (PayeeAddress, TransAmount) VALUES (?, ?)";
+            String updateSql = "UPDATE TransactionsAmount SET TransAmount=? WHERE PayeeAddress=?";
 
+            // Обчислити кількість транзакцій
+            selectStatement = this.conn.prepareStatement(selectTransactionCountSql);
+            selectStatement.setString(1, pAddress);
+            selectStatement.setString(2, pAddress);
+
+            resultSet = selectStatement.executeQuery();
+            int amountOfTransactions = 0;
             if (resultSet.next()) {
                 amountOfTransactions = resultSet.getInt("transaction_count");
             }
-        } catch (SQLException e) {
+
+            // Перевірити, чи існує адреса у таблиці TransactionsAmount
+            selectStatement = this.conn.prepareStatement(selectAddressSql);
+            selectStatement.setString(1, pAddress);
+            resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int addressCount = resultSet.getInt("address_count");
+                if (addressCount > 0) {
+                    // Оновити кількість транзакцій
+                    updateStatement = this.conn.prepareStatement(updateSql);
+                    updateStatement.setInt(1, amountOfTransactions);
+                    updateStatement.setString(2, pAddress);
+                    updateStatement.executeUpdate();
+                } else {
+                    // Вставити новий запис
+                    insertStatement = this.conn.prepareStatement(insertSql);
+                    insertStatement.setString(1, pAddress);
+                    insertStatement.setInt(2, amountOfTransactions);
+                    insertStatement.executeUpdate();
+                }
+            }
+        }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public int getAmountOfTransactions(String pAddress){
+        AmountOfTransactions(pAddress);
+        int amountOfTransactions = 0;
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+
+        try{
+            String sql = "SELECT * FROM TransactionsAmount WHERE PayeeAddress=?";
+            statement = this.conn.prepareStatement(sql);
+            statement.setString(1, pAddress);
+            resultSet = statement.executeQuery();
+            amountOfTransactions = resultSet.getInt("TransAmount");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
 
         return amountOfTransactions;
     }

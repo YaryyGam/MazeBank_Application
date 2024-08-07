@@ -16,7 +16,7 @@ public class Model {
     private boolean clientLoginSuccessFlag;
     private final ObservableList<Transaction> latestTransactions;
     private final ObservableList<Transaction> allTransactions;
-    private SimpleStringProperty totalTransactions;
+    private final SimpleStringProperty totalTransactions = new SimpleStringProperty("0");
     // Admin Data Section
     private boolean adminLoginSuccessFlag;
     private final ObservableList<Client> clients;
@@ -140,6 +140,15 @@ public class Model {
     public void updateBalance(){
         Model.getInstance().getClient().savingsAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(Model.getInstance().getClient().pAddressProperty().get()));
         Model.getInstance().getClient().checkingAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getCheckingAccountBalance(Model.getInstance().getClient().pAddressProperty().get()));
+    }
+
+    public void updateAmountOfTransactions(String pAddress){
+        int totalTransactionsCount = databaseDriver.getAmountOfTransactions(pAddress);
+        totalTransactions.set(String.valueOf(totalTransactionsCount));
+    }
+
+    public SimpleStringProperty getTotalTransactions(){
+        return totalTransactions;
     }
 
     /*
