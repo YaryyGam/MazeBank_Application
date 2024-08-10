@@ -344,6 +344,37 @@ public class DatabaseDriver {
         }
     }
 
+    public void deleteUserMethod(String pAddress){
+        PreparedStatement selectStatementClients = null;
+        PreparedStatement selectStatement_CH_acc = null;
+        PreparedStatement selectStatement_SV_acc = null;
+        PreparedStatement deleteStatementClients = null;
+        PreparedStatement deleteStatement_CH_acc = null;
+        PreparedStatement deleteStatement_SV_acc = null;
+        ResultSet resultSet;
+
+        try {
+            String selectSQLClients = "SELECT * FROM Clients WHERE PayeeAddress=?";
+            String selectSQL_CH_acc = "SELECT * FROM CheckingAccounts WHERE PayeeAddress=?";
+            String selectSQL_SV_acc = "SELECT * FROM SavingsAccounts WHERE PayeeAddress=?";
+            String deleteSQLClients = "";
+            String deleteSQL_CH_acc = "";
+            String deleteSQL_SV_acc = "";
+            selectStatementClients = this.conn.prepareStatement(selectSQLClients);
+            selectStatement_CH_acc = this.conn.prepareStatement(selectSQL_CH_acc);
+            selectStatement_SV_acc = this.conn.prepareStatement(selectSQL_SV_acc);
+            selectStatementClients.setString(1, pAddress);
+            selectStatement_CH_acc.setString(1, pAddress);
+            selectStatement_SV_acc.setString(1, pAddress);
+            resultSet = selectStatementClients.executeQuery();
+            resultSet = selectStatement_CH_acc.executeQuery();
+            resultSet = selectStatement_SV_acc.executeQuery();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     /* Utility Method */
 
     public ResultSet searchClient(String pAddress){

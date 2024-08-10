@@ -194,6 +194,11 @@ public class Model {
         }
     }
 
+    public void updateClients(){
+        clients.clear();
+        setClients();
+    }
+
     public ObservableList<Client> searchClient(String pAddress){
         ObservableList<Client> searchResults = FXCollections.observableArrayList();
         ResultSet resultSet = databaseDriver.searchClient(pAddress);

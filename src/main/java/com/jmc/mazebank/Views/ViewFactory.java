@@ -194,6 +194,31 @@ public class ViewFactory {
         stage.show();
     }
 
+    public void deleteUserWindow(String pAddress){
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(20);
+        Button yesButton = new Button("Yes");
+        Button noButton = new Button("No");
+        hBox.getChildren().addAll(yesButton,noButton);
+        Scene scene = new Scene(hBox, 200, 100);
+        Stage stage = new Stage();
+
+        noButton.setOnAction(e->closeStage(stage));
+        yesButton.setOnAction(e->{
+
+            Model.getInstance().updateClients();
+            closeStage(stage);
+        });
+
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/icon.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Delete User");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private void createStage(FXMLLoader loader){
         Scene scene = null;
         try{
