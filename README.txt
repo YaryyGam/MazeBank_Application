@@ -19,7 +19,7 @@ Clone the repository to your local environment:
 
 bash
 Копировать код
-git clone https://github.com/YaryyGam/mazebank-application.git
+git clone https://github.com/YaryyGam/MazeBank_Application
 cd mazebank-application
 Install the necessary dependencies and build the project:
 
