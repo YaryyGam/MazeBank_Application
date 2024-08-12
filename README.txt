@@ -1,61 +1,60 @@
 MazeBank Application
-MazeBank Application - це банківський додаток, який забезпечує користувачів зручним інтерфейсом для керування своїми банківськими рахунками, здійснення грошових переказів, перегляду історії транзакцій, управління профілем та відправлення репортів. Додаток також містить адмінську панель для управління користувачами та фінансовими операціями.
+MazeBank Application is a banking app that provides users with a convenient interface to manage their bank accounts, perform money transfers, view transaction history, manage their profile, and send reports. The app also includes an admin panel for managing users and financial operations.
 
-Особливості
-Інтерфейс користувача:
+Features
+User Interface:
 
-Сторінка з банківськими рахунками.
-Можливість переводити гроші між рахунками.
-Вкладка з історією транзакцій.
-Профіль користувача для управління особистими даними.
-Функція відправки репортів (Report Message).
-Адмінський інтерфейс:
+Bank accounts page.
+Ability to transfer money between accounts.
+Transaction history tab.
+User profile management for handling personal data.
+Report Message function for sending reports.
+Admin Interface:
 
-Видалення користувачів.
-Створення нових користувачів.
-Поповнення рахунків користувачів.
-Встановлення
-Клонуйте репозиторій до вашого локального середовища:
+Deleting users.
+Creating new users.
+Crediting users' accounts.
+Installation
+Clone the repository to your local environment:
 
 bash
 Копировать код
 git clone https://github.com/YaryyGam/mazebank-application.git
 cd mazebank-application
-Встановіть необхідні залежності та зберіть проект:
+Install the necessary dependencies and build the project:
 
 bash
 Копировать код
 mvn install
-Запустіть додаток:
+Run the application:
 
 bash
 Копировать код
 java -jar mazebank-application.jar
-Використання
-Після запуску програми ви зможете увійти в систему як користувач або адміністратор.
-Користувачі мають доступ до функцій перегляду рахунків, здійснення транзакцій, перегляду історії транзакцій, управління профілем та відправки репортів.
-Адміністратори мають доступ до функцій управління користувачами, включаючи створення нових користувачів, видалення існуючих та поповнення рахунків користувачів.
-Тестування
-Для запуску тестів використовуйте команду:
+Usage
+After launching the application, you can log in as either a user or an administrator.
+Users have access to account viewing, transaction processing, transaction history, profile management, and report sending functionalities.
+Administrators have access to user management features, including creating new users, deleting existing users, and crediting user accounts.
+Testing
+To run tests, use the following command:
 
 bash
 Копировать код
 mvn test
-Вклад
-Ми завжди раді вкладу у розвиток проекту! Якщо ви хочете допомогти:
+Contribution
+We are always happy to welcome contributions to the project! If you want to help:
 
-Форкніть репозиторій.
-Створіть нову гілку (git checkout -b feature/your-feature).
-Внесіть зміни та зробіть коміт (git commit -m 'Add some feature').
-Запуште зміни (git push origin feature/your-feature).
-Створіть pull request.
-Ліцензія
+Fork the repository.
+Create a new branch (git checkout -b feature/your-feature).
+Make your changes and commit them (git commit -m 'Add some feature').
+Push your changes (git push origin feature/your-feature).
+Create a pull request.
+License
 -
-
-Контакти
-Якщо у вас виникли запитання або пропозиції, ви можете зв’язатися з нами:
+Contact
+If you have any questions or suggestions, you can reach us at:
 
 Email: gamerplay0606@gmail.com
 GitHub: YaryyGam
-Відомості
-Особлива подяка YaryyGam за внесок у реалізацію функціоналу додатку.
+Acknowledgements
+Special thanks to YaryyGam for contributing to the development of the application’s functionality.
