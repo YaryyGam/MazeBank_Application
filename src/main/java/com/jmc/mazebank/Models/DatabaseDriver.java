@@ -351,24 +351,52 @@ public class DatabaseDriver {
         PreparedStatement deleteStatementClients = null;
         PreparedStatement deleteStatement_CH_acc = null;
         PreparedStatement deleteStatement_SV_acc = null;
-        ResultSet resultSet;
+        ResultSet resultSetClients = null;
+        ResultSet resultSetCH_acc = null;
+        ResultSet resultSetSV_acc = null;
 
         try {
+            //Select user method
             String selectSQLClients = "SELECT * FROM Clients WHERE PayeeAddress=?";
-            String selectSQL_CH_acc = "SELECT * FROM CheckingAccounts WHERE PayeeAddress=?";
-            String selectSQL_SV_acc = "SELECT * FROM SavingsAccounts WHERE PayeeAddress=?";
-            String deleteSQLClients = "";
-            String deleteSQL_CH_acc = "";
-            String deleteSQL_SV_acc = "";
+            String selectSQL_CH_acc = "SELECT * FROM CheckingAccounts WHERE Owner=?";
+            String selectSQL_SV_acc = "SELECT * FROM SavingsAccounts WHERE Owner=?";
+            //Delete user method
+            String deleteSQLClients = "DELETE FROM Clients WHERE PayeeAddress=?";
+            String deleteSQL_CH_acc = "DELETE FROM CheckingAccounts WHERE Owner=?";
+            String deleteSQL_SV_acc = "DELETE FROM SavingsAccounts WHERE Owner=?";
+            //Preparing statements
+            //Select statement
             selectStatementClients = this.conn.prepareStatement(selectSQLClients);
             selectStatement_CH_acc = this.conn.prepareStatement(selectSQL_CH_acc);
             selectStatement_SV_acc = this.conn.prepareStatement(selectSQL_SV_acc);
+            //Delete statement
+            deleteStatementClients = this.conn.prepareStatement(deleteSQLClients);
+            deleteStatement_CH_acc = this.conn.prepareStatement(deleteSQL_CH_acc);
+            deleteStatement_SV_acc = this.conn.prepareStatement(deleteSQL_SV_acc);
+
             selectStatementClients.setString(1, pAddress);
             selectStatement_CH_acc.setString(1, pAddress);
             selectStatement_SV_acc.setString(1, pAddress);
-            resultSet = selectStatementClients.executeQuery();
-            resultSet = selectStatement_CH_acc.executeQuery();
-            resultSet = selectStatement_SV_acc.executeQuery();
+
+            deleteStatementClients.setString(1, pAddress);
+            deleteStatement_CH_acc.setString(1, pAddress);
+            deleteStatement_SV_acc.setString(1, pAddress);
+
+            resultSetClients = selectStatementClients.executeQuery();
+            resultSetCH_acc = selectStatement_CH_acc.executeQuery();
+            resultSetSV_acc = selectStatement_SV_acc.executeQuery();
+
+            //If exists, delete
+            if (resultSetClients.next()) {
+                deleteStatementClients.executeUpdate();
+            }
+            if (resultSetCH_acc.next()) {
+                deleteStatement_CH_acc.executeUpdate();
+            }
+            if (resultSetSV_acc.next()) {
+                deleteStatement_SV_acc.executeUpdate();
+            }
+
 
         }catch (SQLException e){
             e.printStackTrace();

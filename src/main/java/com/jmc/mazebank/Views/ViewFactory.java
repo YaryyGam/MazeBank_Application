@@ -105,6 +105,30 @@ public class ViewFactory {
         createStage(loader);
     }
 
+    public void showReportWindow(){
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        TextArea textArea = new TextArea();
+        Button button = new Button("Send");
+        vBox.getChildren().addAll(textArea,button);
+        Scene scene = new Scene(vBox, 300, 100);
+        Stage stage = new Stage();
+        button.setOnAction(e->{
+            if(textArea.getText().isEmpty()){
+                closeStage(stage);
+            }else {
+                Model.getInstance().getDatabaseDriver().sendReport(Model.getInstance().getClient().pAddressProperty().get(), textArea.getText());
+                closeStage(stage);
+            }
+        });
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/icon.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Report");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     /* Admin Views Section */
 
     public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem(){
@@ -156,26 +180,6 @@ public class ViewFactory {
         createStage(loader);
     }
 
-    public void showReportWindow(){
-        VBox vBox = new VBox();
-        vBox.setAlignment(Pos.CENTER);
-        TextArea textArea = new TextArea();
-        Button button = new Button("Send");
-        vBox.getChildren().addAll(textArea,button);
-        Scene scene = new Scene(vBox, 300, 100);
-        Stage stage = new Stage();
-        button.setOnAction(e->{
-            Model.getInstance().getDatabaseDriver().sendReport(Model.getInstance().getClient().pAddressProperty().get(), textArea.getText());
-            closeStage(stage);
-        });
-        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/icon.png"))));
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Report");
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public void showMessageWindow(String pAddress, String messageText){
         StackPane pane = new StackPane();
         HBox hBox = new HBox(5);
@@ -206,7 +210,7 @@ public class ViewFactory {
 
         noButton.setOnAction(e->closeStage(stage));
         yesButton.setOnAction(e->{
-
+            Model.getInstance().getDatabaseDriver().deleteUserMethod(pAddress);
             Model.getInstance().updateClients();
             closeStage(stage);
         });
